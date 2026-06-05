@@ -5,10 +5,8 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-content">
-        <a href="#" className="logo-container" style={{ color: '#fff', textDecoration: 'none' }}>
-          <div className="logo-icon">
-            <Sparkles size={18} color="#fff" />
-          </div>
+        <a href="#" className="logo-container" style={{ color: '#202124', textDecoration: 'none' }}>
+          <img src="/logo.png" alt="Google AI Day Logo" style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'contain' }} />
           <span>Gravity <span className="gradient-text">2026</span></span>
         </a>
 

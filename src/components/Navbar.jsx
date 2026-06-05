@@ -19,10 +19,8 @@ export default function Navbar({ onOpenRegister }) {
   return (
     <header className={`header ${scrolled ? 'header-scrolled' : ''}`}>
       <div className="container nav-container">
-        <a href="#" className="logo-container" style={{ color: '#fff' }}>
-          <div className="logo-icon">
-            <Sparkles size={18} color="#fff" />
-          </div>
+        <a href="#" className="logo-container" style={{ color: '#202124' }}>
+          <img src="/logo.png" alt="Google AI Day Logo" style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'contain' }} />
           <span>Gravity <span className="gradient-text">2026</span></span>
         </a>
 
