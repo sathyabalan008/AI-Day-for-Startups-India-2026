@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
-import { Star, Send, Loader, CheckCircle, Smartphone } from 'lucide-react';
+import { Send, Loader, CheckCircle, Smartphone } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+const initialVotes = {
+  excellent: 148,
+  veryGood: 76,
+  good: 24,
+  fair: 8,
+  poor: 2
+};
+
+const pollLabels = {
+  excellent: { text: 'Excellent Experience', color: '#1a73e8' }, // Google Blue
+  veryGood: { text: 'Very Good Experience', color: '#34a853' },  // Google Green
+  good: { text: 'Good Experience', color: '#f9ab00' },          // Google Yellow
+  fair: { text: 'Fair Experience', color: '#fd7e14' },          // Orange
+  poor: { text: 'Poor Experience', color: '#ea4335' }           // Google Red
+};
+
 export default function FeedbackForm() {
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
+  const [votes, setVotes] = useState(initialVotes);
+  const [userVote, setUserVote] = useState(null); // 'excellent' | 'veryGood' | etc.
   const [formData, setFormData] = useState({
     likedMost: '',
     suggestions: '',
@@ -14,6 +30,41 @@ export default function FeedbackForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  // Calculate total votes and percentages
+  const totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
+
+  const getPercentage = (key) => {
+    if (totalVotes === 0) return 0;
+    return Math.round((votes[key] / totalVotes) * 100);
+  };
+
+  const handleVote = (option) => {
+    if (userVote) {
+      // User already voted, adjust counts (subtract from old, add to new)
+      if (userVote === option) return; // Clicked same one
+      setVotes(prev => ({
+        ...prev,
+        [userVote]: prev[userVote] - 1,
+        [option]: prev[option] + 1
+      }));
+    } else {
+      // First time voting
+      setVotes(prev => ({
+        ...prev,
+        [option]: prev[option] + 1
+      }));
+    }
+    setUserVote(option);
+
+    // Fire minor feedback confetti
+    confetti({
+      particleCount: 20,
+      spread: 30,
+      origin: { y: 0.8 },
+      colors: [pollLabels[option].color]
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -21,8 +72,8 @@ export default function FeedbackForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (rating === 0) {
-      alert("Please select an experience rating.");
+    if (!userVote) {
+      alert("Please cast your vote on your experience level first!");
       return;
     }
     setIsSubmitting(true);
@@ -31,26 +82,26 @@ export default function FeedbackForm() {
       setIsSubmitting(false);
       setIsSuccess(true);
       
-      // Fire confetti
+      // Fire grand finale confetti
       confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: ['#f59e0b', '#10b981', '#38bdf8', '#a855f7']
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#1a73e8', '#34a853', '#f9ab00', '#ea4335']
       });
     }, 1200);
   };
 
-  const qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=a855f7&bgcolor=0e1222&data=https://ai-day-for-startups-india-2026.vercel.app/%23feedback";
+  const qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=1a73e8&bgcolor=ffffff&data=https://ai-day-for-startups-india-2026.vercel.app/%23feedback";
 
   return (
     <section id="feedback" className="feedback-section">
       <div className="container">
         <div className="section-header">
-          <span className="section-pill">Your Thoughts</span>
-          <h2 className="section-title">Share Your Feedback</h2>
+          <span className="section-pill">Live Feedback Poll</span>
+          <h2 className="section-title">AI Day for Startups - Live Voting</h2>
           <p className="section-desc">
-            We'd love to hear about your experience at AI Day 2026. Scan the QR code or fill out the form below.
+            Vote on your experience at SRM Ramapuram, Chennai. View live results instantly and submit your detailed suggestions.
           </p>
         </div>
 
@@ -58,8 +109,8 @@ export default function FeedbackForm() {
           {/* QR Code Container */}
           <div className="feedback-qr-box">
             <Smartphone size={24} style={{ color: 'var(--text-accent)' }} />
-            <h3 style={{ fontSize: '1.1rem', color: '#fff', fontFamily: 'var(--font-heading)' }}>
-              Scan on Mobile
+            <h3 style={{ fontSize: '1.1rem', color: '#202124', fontFamily: 'var(--font-heading)', fontWeight: 800 }}>
+              Scan to Vote
             </h3>
             <img 
               src={qrCodeUrl} 
@@ -68,44 +119,105 @@ export default function FeedbackForm() {
               loading="lazy"
             />
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-              Quickly complete this feedback form on your smartphone during or after the sessions.
+              Scan to vote and fill out this questionnaire from your phone during the conference.
             </p>
           </div>
 
           {/* Form Container */}
           <div className="feedback-form-box glass-card">
             {isSuccess ? (
-              <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                <div className="success-icon" style={{ borderColor: '#f59e0b', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+              <div style={{ textAlign: 'center', padding: '24px 0' }}>
+                <div className="success-icon">
                   <CheckCircle size={36} />
                 </div>
-                <h3 className="success-title">Feedback Submitted!</h3>
-                <p className="success-desc">
-                  Thank you for helping us shape the future of AI Day. We appreciate your valuable insights!
+                <h3 className="success-title">Vote Counted & Submitted!</h3>
+                <p className="success-desc" style={{ marginBottom: '24px' }}>
+                  Thank you for helping us improve AI Day. Below are the current aggregate results of the attendee poll.
                 </p>
+
+                {/* Final Results Display */}
+                <div className="poll-results" style={{ textAlign: 'left' }}>
+                  {Object.keys(pollLabels).map((key) => {
+                    const labelInfo = pollLabels[key];
+                    const percent = getPercentage(key);
+                    return (
+                      <div key={key} className="poll-result-row">
+                        <div className="poll-result-header">
+                          <span>{labelInfo.text}</span>
+                          <span>{percent}% ({votes[key]} votes)</span>
+                        </div>
+                        <div className="poll-bar-outer">
+                          <div 
+                            className="poll-bar-inner" 
+                            style={{ 
+                              width: `${percent}%`, 
+                              backgroundColor: labelInfo.color 
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                  <label className="form-label" style={{ marginBottom: '8px' }}>
-                    Rate your overall experience *
+                {/* Voting Group */}
+                <div style={{ marginBottom: '24px' }}>
+                  <label className="form-label" style={{ textAlign: 'center', marginBottom: '12px' }}>
+                    Cast Your Vote: Overall Experience *
                   </label>
-                  <div className="star-rating">
-                    {[1, 2, 3, 4, 5].map((starValue) => (
-                      <button
-                        key={starValue}
-                        type="button"
-                        className={`star-btn ${starValue <= (hoverRating || rating) ? 'active' : ''}`}
-                        onClick={() => setRating(starValue)}
-                        onMouseEnter={() => setHoverRating(starValue)}
-                        onMouseLeave={() => setHoverRating(0)}
-                        aria-label={`Rate ${starValue} stars`}
-                      >
-                        <Star size={32} fill={starValue <= (hoverRating || rating) ? 'currentColor' : 'none'} />
-                      </button>
-                    ))}
+                  
+                  <div className="poll-options">
+                    {Object.keys(pollLabels).map((key) => {
+                      const opt = pollLabels[key];
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          className={`poll-option-btn ${userVote === key ? 'active' : ''}`}
+                          onClick={() => handleVote(key)}
+                        >
+                          {opt.text.split(' ')[0]}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
+
+                {/* Live Results (Toggles visible after first vote cast) */}
+                {userVote && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '12px', fontWeight: 600 }}>
+                      Live Poll Results (Total votes: {totalVotes})
+                    </div>
+                    <div className="poll-results">
+                      {Object.keys(pollLabels).map((key) => {
+                        const labelInfo = pollLabels[key];
+                        const percent = getPercentage(key);
+                        return (
+                          <div key={key} className="poll-result-row">
+                            <div className="poll-result-header">
+                              <span style={{ fontWeight: userVote === key ? '700' : '600' }}>
+                                {labelInfo.text} {userVote === key ? '★' : ''}
+                              </span>
+                              <span>{percent}% ({votes[key]} votes)</span>
+                            </div>
+                            <div className="poll-bar-outer">
+                              <div 
+                                className="poll-bar-inner" 
+                                style={{ 
+                                  width: `${percent}%`, 
+                                  backgroundColor: labelInfo.color 
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 <div className="form-group">
                   <label className="form-label" htmlFor="feedback-liked">
@@ -116,7 +228,7 @@ export default function FeedbackForm() {
                     name="likedMost"
                     required
                     className="form-textarea"
-                    placeholder="e.g. The sovereign LLM panel, startup pitch competitions, networking..."
+                    placeholder="e.g. The agentic coding showcase, hands-on codelabs, networking..."
                     value={formData.likedMost}
                     onChange={handleChange}
                     style={{ height: '90px' }}
@@ -131,7 +243,7 @@ export default function FeedbackForm() {
                     id="feedback-suggestions"
                     name="suggestions"
                     className="form-textarea"
-                    placeholder="e.g. More hands-on developer workshops, larger Q&A sessions..."
+                    placeholder="e.g. Add more intermediate workshops, longer GPU cloud credits..."
                     value={formData.suggestions}
                     onChange={handleChange}
                     style={{ height: '90px' }}
@@ -174,11 +286,11 @@ export default function FeedbackForm() {
                   {isSubmitting ? (
                     <>
                       <Loader size={18} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
-                      Sending feedback...
+                      Submitting response...
                     </>
                   ) : (
                     <>
-                      <Send size={16} /> Submit Feedback
+                      <Send size={16} /> Submit Detailed Feedback
                     </>
                   )}
                 </button>
