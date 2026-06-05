@@ -17,11 +17,11 @@ function App() {
       <Navbar onOpenRegister={() => setIsRegisterOpen(true)} />
       
       <main style={{ flexGrow: 1 }}>
+        <FeedbackForm />
         <Hero onOpenRegister={() => setIsRegisterOpen(true)} />
         <VibeShowcase />
         <Schedule />
         <Speakers />
-        <FeedbackForm />
       </main>
 
       <Footer />
