@@ -1,15 +1,16 @@
-# AI Day for Startups India 2026
+# React + Vite
 
-Welcome to the **AI Day for Startups India 2026 - Gravity 2026** workspace.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-This repository is set up to house the project code, prototypes, and resources developed during the event.
+Currently, two official plugins are available:
 
-## Repository Structure
-- Files and directories will be organized as the project grows.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Getting Started
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/sathyabalan008/AI-Day-for-Startups-India-2026.git
-   ```
-2. Open in your favorite IDE and start collaborating!
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
