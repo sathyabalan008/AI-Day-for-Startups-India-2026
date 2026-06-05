@@ -1268,3 +1268,40 @@ h1, h2, h3, h4 {
   min-height: 10px;
 }
 
+/* Feedback Form Section */
+.feedback-section {
+  padding: 100px 0;
+  background: rgba(13, 17, 35, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.feedback-card {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0 28px;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  transition: var(--transition-fast);
+}
+
+.star-btn:hover {
+  transform: scale(1.15);
+}
+
+.star-btn.active {
+  color: #f59e0b;
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+}
+
+

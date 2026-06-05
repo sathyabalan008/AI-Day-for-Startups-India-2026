@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import VibeShowcase from './components/VibeShowcase';
 import Schedule from './components/Schedule';
 import Speakers from './components/Speakers';
+import FeedbackForm from './components/FeedbackForm';
 import AiAssistant from './components/AiAssistant';
 import RegistrationModal from './components/RegistrationModal';
 import Footer from './components/Footer';
@@ -20,6 +21,7 @@ function App() {
         <VibeShowcase />
         <Schedule />
         <Speakers />
+        <FeedbackForm />
       </main>
 
       <Footer />
