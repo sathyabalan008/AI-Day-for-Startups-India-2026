@@ -1,52 +1,52 @@
 import React, { useState } from 'react';
 
 const scheduleData = {
-  keynotes: [
+  morning: [
     {
-      time: '09:30 AM',
-      title: "Opening Keynote: India's AI Decade",
-      speaker: 'Dr. Aruna Sen (Head of AI Research, IndiaAI)',
-      desc: 'Exploring the national roadmap for compute infrastructure, local LLMs, and open-source intelligence.'
+      time: '09:00 AM',
+      title: 'Registrations & Welcome Keynote',
+      speaker: 'StartupTN Regional Lead & Google Developer Relations',
+      desc: 'Registration check-in at SRM Ramapuram campus, followed by opening remarks on Tamil Nadu’s startup ecosystem.'
     },
     {
-      time: '10:30 AM',
-      title: 'Scaling Foundational Models in Production',
-      speaker: 'Rohan Verma (Founder, Neurotech Labs)',
-      desc: 'Deep dive into optimizing inference latency, parameter-efficient fine-tuning (PEFT), and edge computing deployment.'
+      time: '10:00 AM',
+      title: 'Multimodal AI Capabilities with Google Gemini',
+      speaker: 'Google Developer Experts & Researchers',
+      desc: 'Technical introduction to Gemini models, Vertex AI, Google AI Studio, and leveraging Gemma open models for local development.'
     }
   ],
-  panels: [
+  afternoon: [
     {
       time: '11:30 AM',
-      title: 'VC Panel: The Sovereign AI Funding Wave',
-      speaker: 'Moderated by Meera Nair (Elevate Ventures)',
-      desc: 'Leading investors discuss valuation trends, compute credit incentives, and what makes an AI startup stand out.'
+      title: 'Hands-on Codelab: Building AI Agents',
+      speaker: 'Google Cloud Platform Architects',
+      desc: 'Bring your laptops. Interactive session building real-world AI agent workflows using Google’s GenAI SDK.'
     },
     {
       time: '02:00 PM',
-      title: 'Ethical AI, Safety, and Regional Data Governance',
-      speaker: 'Panel of Legal & Technical Experts',
-      desc: 'Addressing regulatory compliance, safety guardrails, and building trust in automated systems.'
+      title: 'Sovereign AI & Edge Intelligence for Startups',
+      speaker: 'Hardware & Infrastructure Panelists',
+      desc: 'Deploying edge models, parameter efficiency, data sovereignty, and secure localized AI hosting strategies.'
     }
   ],
-  pitches: [
+  networking: [
     {
-      time: '03:00 PM',
-      title: 'Startup Pitch Battle: Top 10 Teams',
-      speaker: 'VC Jury & Incubators',
-      desc: 'Ten shortlisted AI startups pitch their ideas live for a chance to win from a ₹50L seed grant pool.'
+      time: '03:30 PM',
+      title: 'AI Startup Pitch Showcase & Demos',
+      speaker: 'Top 10 Shortlisted AI Teams',
+      desc: 'Live demos of physical AI, edge computing projects, and custom LLM solutions developed in Tamil Nadu.'
     },
     {
-      time: '05:00 PM',
-      title: 'Award Ceremony & Networking Mixer',
-      speaker: 'All Speakers & Attendees',
-      desc: 'Celebrating the pitch winners and concluding with a curated networking mixer and dinner.'
+      time: '04:30 PM',
+      title: 'Startup TN Networking & Ecosystem Mixer',
+      speaker: 'All Attendees & Mentors',
+      desc: 'Connect with mentors, VCs, and tech enthusiasts. Closing tea, coffee, and refreshments.'
     }
   ]
 };
 
 export default function Schedule() {
-  const [activeTab, setActiveTab] = useState('keynotes');
+  const [activeTab, setActiveTab] = useState('morning');
 
   return (
     <section id="schedule" className="section">
@@ -55,28 +55,28 @@ export default function Schedule() {
           <span className="section-pill">Timeline</span>
           <h2 className="section-title">Event Schedule</h2>
           <p className="section-desc">
-            Explore the agenda for AI Day 2026. Toggle through the tracks to plan your day.
+            Plan your day at SRM Ramapuram, Chennai. Toggle through our morning, afternoon, and showcase tracks.
           </p>
         </div>
 
         <div className="schedule-tabs">
           <button 
-            className={`tab-btn ${activeTab === 'keynotes' ? 'active' : ''}`}
-            onClick={() => setActiveTab('keynotes')}
+            className={`tab-btn ${activeTab === 'morning' ? 'active' : ''}`}
+            onClick={() => setActiveTab('morning')}
           >
-            Keynotes
+            Morning Sessions (09:00 AM)
           </button>
           <button 
-            className={`tab-btn ${activeTab === 'panels' ? 'active' : ''}`}
-            onClick={() => setActiveTab('panels')}
+            className={`tab-btn ${activeTab === 'afternoon' ? 'active' : ''}`}
+            onClick={() => setActiveTab('afternoon')}
           >
-            Panel Discussions
+            Afternoon Codelabs (11:30 AM)
           </button>
           <button 
-            className={`tab-btn ${activeTab === 'pitches' ? 'active' : ''}`}
-            onClick={() => setActiveTab('pitches')}
+            className={`tab-btn ${activeTab === 'networking' ? 'active' : ''}`}
+            onClick={() => setActiveTab('networking')}
           >
-            Pitches & Networking
+            Pitches & Mixer (03:30 PM)
           </button>
         </div>
 
