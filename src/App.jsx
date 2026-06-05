@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import VibeShowcase from './components/VibeShowcase';
 import Schedule from './components/Schedule';
 import Speakers from './components/Speakers';
 import AiAssistant from './components/AiAssistant';
@@ -16,6 +17,7 @@ function App() {
       
       <main style={{ flexGrow: 1 }}>
         <Hero onOpenRegister={() => setIsRegisterOpen(true)} />
+        <VibeShowcase />
         <Schedule />
         <Speakers />
       </main>
